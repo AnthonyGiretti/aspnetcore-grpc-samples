@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option csharp_namespace = "DemoAspNetCore3";
+
+service MyOwnService {
+  rpc WhoIs(EmptyRequest) returns (WhoIsReply) {}
+  rpc IntroduceYourself (IntroduceYourselfRequest) returns (IntroduceYourselfReply) {}
+}
+
+message EmptyRequest {
+}
+
+message WhoIsReply {
+  string message = 1;
+}
+
+message IntroduceYourselfRequest {
+	string name = 1;
+}
+
+message IntroduceYourselfReply {
+	
+	string name = 1;
+	string job = 2;
+	string country = 3;
+	repeated string citizenship = 4;
+	
+	repeated Skill skills = 5;
+}
+
+message Skill {
+	string skillName = 1;
+	SkillLevel skillLevel = 2;
+}
+
+enum SkillLevel {
+	GOOD = 0;
+	BAD = 1;
+}
