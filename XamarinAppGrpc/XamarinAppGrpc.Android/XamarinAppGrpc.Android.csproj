@@ -94,11 +94,5 @@
     <AndroidResource Include="Resources\drawable\tab_about.png" />
     <AndroidResource Include="Resources\drawable\tab_feed.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\XamarinAppGrpc\XamarinAppGrpc.csproj">
-      <Project>{166B59C4-1D19-4205-B1ED-5E6CD7C8E4D1}</Project>
-      <Name>XamarinAppGrpc</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
