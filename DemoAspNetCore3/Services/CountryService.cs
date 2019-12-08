@@ -3,6 +3,7 @@ using DemoGrpc.Domain.Entities;
 using DemoGrpc.Protobufs;
 using DempGrpc.Services.Interfaces;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Threading.Tasks;
 
@@ -19,8 +20,10 @@ namespace DemoGrpc.Web.Services
             _mapper = mapper;
         }
 
+        [Authorize]
         public override async Task<CountriesReply> GetAll(EmptyRequest request, ServerCallContext context)
         {
+            var currentUser = context.GetHttpContext().User;
             try
             {
                 var countries = await _countryService.GetAsync();
@@ -34,8 +37,10 @@ namespace DemoGrpc.Web.Services
             }
         }
 
+        [Authorize]
         public override async Task<CountryReply> GetById(CountrySearchRequest request, ServerCallContext context)
         {
+            var currentUser = context.GetHttpContext().User;
             try
             {
                 var country = await _countryService.GetByIdAsync(request.CountryId);
@@ -49,8 +54,10 @@ namespace DemoGrpc.Web.Services
             }
         }
 
+        [Authorize]
         public override async Task<CountryReply> Create(CountryCreateRequest request, ServerCallContext context)
         {
+            var currentUser = context.GetHttpContext().User;
             try
             {
                 var createCountry = _mapper.Map<Country>(request);
@@ -65,8 +72,10 @@ namespace DemoGrpc.Web.Services
             }
         }
 
+        [Authorize]
         public override async Task<CountryReply> Update(CountryRequest request, ServerCallContext context)
         {
+            var currentUser = context.GetHttpContext().User;
             try
             {
                 var updateCountry = _mapper.Map<Country>(request);
@@ -81,8 +90,10 @@ namespace DemoGrpc.Web.Services
             }
         }
 
+        [Authorize]
         public override async Task<EmptyReply> Delete(CountrySearchRequest request, ServerCallContext context)
         {
+            var currentUser = context.GetHttpContext().User;
             try
             {
                 await _countryService.DeleteAsync(request.CountryId);
