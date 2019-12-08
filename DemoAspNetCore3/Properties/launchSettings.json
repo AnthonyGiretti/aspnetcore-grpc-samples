@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "DemoAspNetCore3": {
+    "DemoGrpc.Web": {
       "commandName": "Project",
       "launchBrowser": false,
       "applicationUrl": "https://localhost:5001",
