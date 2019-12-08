@@ -1,7 +1,12 @@
 ﻿using DemoAspNetCore3.Middlewares;
 using DemoAspNetCore3.Services;
+using DemoGrpc.Repository;
 using DemoGrpc.Repository.Database;
+using DemoGrpc.Repository.Interfaces;
+using DemoGrpc.Web.Logging;
 using DemoGrpc.Web.Services;
+using DempGrpc.Services;
+using DempGrpc.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,7 +46,10 @@ namespace DemoAspNetCore3
 
             services.AddDbContext<DemoDbContext>(options => options.UseSqlServer(Configuration["MySecretConnectionString"]));
 
-            services.AddGrpc();
+            services.AddGrpc(options => options.Interceptors.Add<LoggerInterceptor>());
+
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<ICountryRepository, EFCountryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,14 +1,18 @@
 ﻿using DemoGrpc.Protobufs;
+using DempGrpc.Services.Interfaces;
 using Grpc.Core;
+using System;
 using System.Threading.Tasks;
 
 namespace DemoGrpc.Web.Services
 {
     public class CountryGrpcService : CountryService.CountryServiceBase
     {
-        public CountryGrpcService()
-        {
+        private readonly ICountryService _countryService;
 
+        public CountryGrpcService(ICountryService countryService)
+        {
+            _countryService = countryService;
         }
 
         public override async Task<CountriesReply> GetAll(EmptyRequest request, ServerCallContext context)
