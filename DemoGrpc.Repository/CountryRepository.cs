@@ -2,10 +2,10 @@
 using DemoGrpc.Repository.Database;
 using DemoGrpc.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Z.EntityFramework.Plus;
 
 namespace DemoGrpc.Repository
 {
@@ -36,20 +36,24 @@ namespace DemoGrpc.Repository
 
         public async Task<int> UpdateAsync(Country country)
         {
-            return await _dbContext.Country
-                                    .Where(x => x.CountryId == country.CountryId)
-                                    .UpdateAsync(x => new Country
-                                    {
-                                        CountryName = country.CountryName,
-                                        Description = country.Description
-                                    });
+            var countryToUpdate = await _dbContext.Country
+                                                    .Where(x => x.CountryId == country.CountryId)
+                                                    .FirstOrDefaultAsync();
+
+            countryToUpdate.CountryName = country.CountryName;
+            countryToUpdate.Description = country.Description;
+
+            return await _dbContext.SaveChangesAsync();
         }
 
         public async Task<int> DeleteAsync(int countryId)
         {
-            return await _dbContext.Country
-                                    .Where(x => x.CountryId == countryId)
-                                    .DeleteAsync();
+            var countryToDelete = await _dbContext.Country
+                                                    .Where(x => x.CountryId == countryId)
+                                                    .FirstOrDefaultAsync();
+
+            _dbContext.Remove(countryToDelete);
+            return await _dbContext.SaveChangesAsync();
         }
     }
 }

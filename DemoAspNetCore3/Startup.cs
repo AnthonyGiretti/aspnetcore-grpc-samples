@@ -1,4 +1,5 @@
-﻿using DemoAspNetCore3.Middlewares;
+﻿using AutoMapper;
+using DemoAspNetCore3.Middlewares;
 using DemoAspNetCore3.Services;
 using DemoGrpc.Repository;
 using DemoGrpc.Repository.Database;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Reflection;
 
 namespace DemoAspNetCore3
 {
@@ -47,6 +49,8 @@ namespace DemoAspNetCore3
             services.AddDbContext<DemoDbContext>(options => options.UseSqlServer(Configuration["MySecretConnectionString"]));
 
             services.AddGrpc(options => options.Interceptors.Add<LoggerInterceptor>());
+
+            services.AddAutoMapper(Assembly.Load("DemoGrpc.Web"));
 
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICountryRepository, EFCountryRepository>();

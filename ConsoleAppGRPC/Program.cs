@@ -25,7 +25,7 @@ namespace ConsoleAppGRPC
                 return HttpPolicyExtensions.HandleTransientHttpError()
                                 .WaitAndRetryAsync(3, (input) => TimeSpan.FromSeconds(3 + input), (result, timeSpan, retryCount, context) =>
                                                     {
-                                                        Console.Write($"Request failed with {result.Result.StatusCode}.\n");
+                                                        Console.WriteLine($"Request failed with {result.Result.StatusCode}.");
                                                     });
             };
 
@@ -41,12 +41,50 @@ namespace ConsoleAppGRPC
             
             try
             {
+                // Create 
+                var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "rising sun country" });
+                var country = new Country
+                {
+                    CountryId = createdCountry.Id,
+                    CountryName = createdCountry.Name,
+                    Description = createdCountry.Description
+                };
+                Console.WriteLine($"Country {country.CountryName} ({country.CountryId}) created!");
+
+                // GetById
+                var foundCountry = await client.GetByIdAsync(new CountrySearchRequest { CountryId = country.CountryId });
+                country = new Country
+                {
+                    CountryId = foundCountry.Id,
+                    CountryName = foundCountry.Name,
+                    Description = foundCountry.Description
+                };
+                Console.WriteLine($"Found country {country.CountryName} ({country.CountryId})");
+
+                // Update 
+                var updatedCountry = await client.UpdateAsync(new CountryRequest { Id = country.CountryId, Name = "Japan", Description = "rising sun country, Nippon!!!" });
+                country = new Country
+                {
+                    CountryId = updatedCountry.Id,
+                    CountryName = updatedCountry.Name,
+                    Description = updatedCountry.Description
+                };
+                Console.WriteLine($"Country {country.CountryName} ({country.CountryId}) updated with new description: {country.Description}");
+
+                // Delete
+                await client.DeleteAsync(new CountrySearchRequest { CountryId = country.CountryId });
+                Console.WriteLine($"Deleted country {country.CountryName} ({country.CountryId})");
+
+                // Get all
                 var countries = (await client.GetAllAsync(new EmptyRequest())).Countries.Select(x => new Country
                 {
                     CountryId = x.Id,
                     Description = x.Description,
                     CountryName = x.Name
                 }).ToList();
+
+                Console.WriteLine("Found countries");
+                countries.ForEach(x => Console.WriteLine($"Found country {x.CountryName} ({x.CountryId}) {x.Description}"));
             }
             catch (RpcException e)
             {
