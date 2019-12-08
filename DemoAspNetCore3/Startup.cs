@@ -1,6 +1,7 @@
 ﻿using DemoAspNetCore3.Middlewares;
 using DemoAspNetCore3.Services;
 using DemoGrpc.Repository.Database;
+using DemoGrpc.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -60,7 +61,8 @@ namespace DemoAspNetCore3
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<MyOwnGRpcService>();
+                endpoints.MapGrpcService<MyOwnGRpcService>(); 
+                endpoints.MapGrpcService<CountryGrpcService>();
 
                 endpoints.MapGet("/", async context =>
                 {

@@ -15,19 +15,19 @@ namespace DemoAspNetCore3.Services
         }
 
         //[Authorize]
-        public override Task<WhoIsReply> WhoIs(EmptyRequest request, ServerCallContext context)
+        public override async Task<WhoIsReply> WhoIs(EmptyRequest request, ServerCallContext context)
         {
             //throw new RpcException(new Status(StatusCode.Internal, "Ooooops!"));
             var user = context.GetHttpContext().User;
             var httpContext = context.GetHttpContext();
-            return Task.FromResult(new WhoIsReply
+            return await Task.FromResult(new WhoIsReply
             {
                 Message = "Anthony" 
             });
         }
 
         //[Authorize]
-        public override Task<IntroduceYourselfReply> IntroduceYourself(IntroduceYourselfRequest request, ServerCallContext context)
+        public override async Task<IntroduceYourselfReply> IntroduceYourself(IntroduceYourselfRequest request, ServerCallContext context)
         {
             var user = context.GetHttpContext().User;
             var httpContext = context.GetHttpContext();
@@ -36,10 +36,10 @@ namespace DemoAspNetCore3.Services
             {
                 context.ResponseTrailers.Add(new Metadata.Entry("Name","the value was empty"));
                 context.Status = new Status(StatusCode.InvalidArgument, $"Validation failed");
-                return Task.FromResult(new IntroduceYourselfReply());
+                return await Task.FromResult(new IntroduceYourselfReply());
             }
             
-            return Task.FromResult(new IntroduceYourselfReply
+            return await Task.FromResult(new IntroduceYourselfReply
             {
                 Name = request.Name,
                 Job = "Developer",
