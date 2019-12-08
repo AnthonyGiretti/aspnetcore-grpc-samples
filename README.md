@@ -1,4 +1,4 @@
-# Samples of gRPC services in ASP.NET Core 3.1 
+# Samples of gRPC services in ASP.NET Core 3.1 (work in progress)
 
 Sample of Layered architecture (Ntier)
 
