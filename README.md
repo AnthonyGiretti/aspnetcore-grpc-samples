@@ -16,7 +16,7 @@ Sample of token validation and get authenticated user from ServerCallContext
 
 Sample of KeyVault configuration and usage
 
-Sample of .NET Core 3.1 client CRUD comsumption
+Sample of .NET Core 3.1 client CRUD consumption
 
 Sample of .NET Core 3.1 client using Polly resiliency
 
