@@ -18,6 +18,7 @@ namespace DempGrpc.Services
 
         public Task<List<Country>> GetAsync()
         {
+            throw new Exception("error in the service");
             return _countryRepository.GetAsync();
         }
 

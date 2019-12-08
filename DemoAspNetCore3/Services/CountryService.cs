@@ -18,18 +18,26 @@ namespace DemoGrpc.Web.Services
 
         public override async Task<CountriesReply> GetAll(EmptyRequest request, ServerCallContext context)
         {
-            //throw new RpcException(Status.DefaultCancelled);
-            var countries = await _countryService.GetAsync();
-
-            return new CountriesReply
+            try
             {
-                Countries = { countries.Select(x => new CountryReply
+                var countries = await _countryService.GetAsync();
+
+                return new CountriesReply
                 {
-                    Id = x.CountryId,
-                    Description = x.Description,
-                    Name = x.CountryName
-                }) }
-            };
+                    Countries = { countries.Select(x => new CountryReply
+                    {
+                        Id = x.CountryId,
+                        Description = x.Description,
+                        Name = x.CountryName
+                    }) }
+                };
+            }
+            catch (Exception e)
+            {
+                var httpContext = context.GetHttpContext();
+                httpContext.Response.StatusCode = 500;
+                throw new RpcException(Status.DefaultCancelled, e.Message);
+            }
         }
 
         public override async Task<CountryReply> GetById(CountrySearchRequest request, ServerCallContext context)
