@@ -2,6 +2,7 @@
 using DempGrpc.Services.Interfaces;
 using Grpc.Core;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DemoGrpc.Web.Services
@@ -17,7 +18,17 @@ namespace DemoGrpc.Web.Services
 
         public override async Task<CountriesReply> GetAll(EmptyRequest request, ServerCallContext context)
         {
-            return await Task.FromResult(new CountriesReply());
+            var countries = await _countryService.GetAsync();
+
+            return new CountriesReply
+            {
+                Countries = { countries.Select(x => new CountryReply
+                {
+                    Id = x.CountryId,
+                    Description = x.Description,
+                    Name = x.CountryName
+                }) }
+            };
         }
 
         public override async Task<CountryReply> GetById(CountrySearchRequest request, ServerCallContext context)
