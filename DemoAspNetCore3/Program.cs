@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace DemoAspNetCore3
 {
@@ -20,6 +18,19 @@ namespace DemoAspNetCore3
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                }).ConfigureAppConfiguration((context, config) =>
+                {
+                    config.SetBasePath(Directory.GetCurrentDirectory())
+                          .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                          .AddEnvironmentVariables()
+                          .AddUserSecrets<Startup>();
+
+                    var builtConfig = config.Build();
+                    config.AddAzureKeyVault(
+                        $"https://{builtConfig["KeyVault:Vault"]}.vault.azure.net/",
+                        builtConfig["KeyVault:ClientId"],
+                        builtConfig["KeyVault:ClientSecret"],
+                        new DefaultKeyVaultSecretManager());
                 });
     }
 }
