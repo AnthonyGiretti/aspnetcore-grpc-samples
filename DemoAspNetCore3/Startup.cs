@@ -6,8 +6,10 @@ using DemoGrpc.Repository.Database;
 using DemoGrpc.Repository.Interfaces;
 using DemoGrpc.Web.Logging;
 using DemoGrpc.Web.Services;
+using DemoGrpc.Web.Validator;
 using DempGrpc.Services;
 using DempGrpc.Services.Interfaces;
+using Grpc.AspNetCore.FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,7 +50,14 @@ namespace DemoAspNetCore3
 
             services.AddDbContext<DemoDbContext>(options => options.UseSqlServer(Configuration["MySecretConnectionString"]));
 
-            services.AddGrpc(options => options.Interceptors.Add<LoggerInterceptor>());
+            services.AddGrpc(options =>
+            {
+                options.EnableMessageValidation();
+                options.Interceptors.Add<LoggerInterceptor>();
+            });
+
+            services.AddValidatorLocator();
+            services.AddValidator<CountryCreateRequestValidator>();
 
             services.AddAutoMapper(Assembly.Load("DemoGrpc.Web"));
 
