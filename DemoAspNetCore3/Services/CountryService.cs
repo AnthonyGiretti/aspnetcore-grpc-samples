@@ -18,6 +18,7 @@ namespace DemoGrpc.Web.Services
 
         public override async Task<CountriesReply> GetAll(EmptyRequest request, ServerCallContext context)
         {
+            //throw new RpcException(Status.DefaultCancelled);
             var countries = await _countryService.GetAsync();
 
             return new CountriesReply

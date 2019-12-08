@@ -22,17 +22,8 @@ namespace DemoGrpc.Web.Logging
             ServerCallContext context,
             UnaryServerMethod<TRequest, TResponse> continuation)
         {
-            try
-            {
-                LogCall(context);
-                return continuation(request, context);
-            }
-            catch (Exception e)
-            {
-                var httpContext = context.GetHttpContext();
-                _logger.LogError(e, $"Error in the call. Request: {httpContext.Request.Query}");
-            }
-            return null;
+            LogCall(context);
+            return continuation(request, context);
         }
 
         private void LogCall(ServerCallContext context)

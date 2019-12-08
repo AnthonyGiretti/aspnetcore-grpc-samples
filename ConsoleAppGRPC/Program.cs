@@ -2,8 +2,12 @@
 using DemoGrpc.Protobufs;
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Extensions.Http;
 using System;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using static DemoGrpc.Protobufs.CountryService;
 
@@ -15,11 +19,21 @@ namespace ConsoleAppGRPC
         {
             // DI
             var services = new ServiceCollection();
-            
+
+            Func<HttpRequestMessage, IAsyncPolicy<HttpResponseMessage>> retryFunc = (request) =>
+            {
+                return HttpPolicyExtensions.HandleTransientHttpError()
+                                .WaitAndRetryAsync(3, (input) => TimeSpan.FromSeconds(3 + input), (result, timeSpan, retryCount, context) =>
+                                                    {
+                                                        Console.Write($"Request failed with {result.Result.StatusCode}.");
+                                                    });
+            };
+
+
             services.AddGrpcClient<CountryServiceClient>(o =>
             {
                 o.Address = new Uri("https://localhost:5001");
-            });
+            }).AddPolicyHandler(retryFunc);
 
             var provider = services.BuildServiceProvider();
 
