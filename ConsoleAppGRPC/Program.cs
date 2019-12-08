@@ -22,10 +22,11 @@ namespace ConsoleAppGRPC
 
             Func<HttpRequestMessage, IAsyncPolicy<HttpResponseMessage>> retryFunc = (request) =>
             {
-                return HttpPolicyExtensions.HandleTransientHttpError()
-                                .WaitAndRetryAsync(3, (input) => TimeSpan.FromSeconds(3 + input), (result, timeSpan, retryCount, context) =>
+                return Policy.HandleResult<HttpResponseMessage>(r => r.Headers.GetValues("grpc-status").FirstOrDefault() != "0")
+                             .WaitAndRetryAsync(3, (input) => TimeSpan.FromSeconds(3 + input), (result, timeSpan, retryCount, context) =>
                                                     {
-                                                        Console.WriteLine($"Request failed with {result.Result.StatusCode}.");
+                                                        var grpcStatus = (StatusCode)int.Parse(result.Result.Headers.GetValues("grpc-status").FirstOrDefault());
+                                                        Console.WriteLine($"Request failed with {grpcStatus}. Retry");
                                                     });
             };
 

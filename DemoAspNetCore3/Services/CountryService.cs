@@ -23,7 +23,6 @@ namespace DemoGrpc.Web.Services
         [Authorize]
         public override async Task<CountriesReply> GetAll(EmptyRequest request, ServerCallContext context)
         {
-            var currentUser = context.GetHttpContext().User;
             try
             {
                 var countries = await _countryService.GetAsync();
@@ -31,8 +30,6 @@ namespace DemoGrpc.Web.Services
             }
             catch (Exception e)
             {
-                var httpContext = context.GetHttpContext();
-                httpContext.Response.StatusCode = 500; // Required to fire Polly retry policy, else 200 will be returned
                 throw new RpcException(Status.DefaultCancelled, e.Message);
             }
         }
@@ -48,8 +45,6 @@ namespace DemoGrpc.Web.Services
             }
             catch (Exception e)
             {
-                var httpContext = context.GetHttpContext();
-                httpContext.Response.StatusCode = 500; // Required to fire Polly retry policy, else 200 will be returned
                 throw new RpcException(Status.DefaultCancelled, e.Message);
             }
         }
@@ -66,8 +61,6 @@ namespace DemoGrpc.Web.Services
             }
             catch (Exception e)
             {
-                var httpContext = context.GetHttpContext();
-                httpContext.Response.StatusCode = 500; // Required to fire Polly retry policy, else 200 will be returned
                 throw new RpcException(Status.DefaultCancelled, e.Message);
             }
         }
@@ -84,8 +77,6 @@ namespace DemoGrpc.Web.Services
             }
             catch (Exception e)
             {
-                var httpContext = context.GetHttpContext();
-                httpContext.Response.StatusCode = 500; // Required to fire Polly retry policy, else 200 will be returned
                 throw new RpcException(Status.DefaultCancelled, e.Message);
             }
         }
@@ -101,8 +92,6 @@ namespace DemoGrpc.Web.Services
             }
             catch (Exception e)
             {
-                var httpContext = context.GetHttpContext();
-                httpContext.Response.StatusCode = 500; // Required to fire Polly retry policy, else 200 will be returned
                 throw new RpcException(Status.DefaultCancelled, e.Message);
             }
         }
