@@ -8,8 +8,8 @@ namespace DemoGrpc.Repository.Interfaces
     {
         Task<List<Country>> GetAsync();
         Task<Country> GetByIdAsync(int countryId);
-        Task<long> AddAsync(Country country);
-        Task<int> UpdateAsync(int countryId, Country country);
+        Task<Country> AddAsync(Country country);
+        Task<int> UpdateAsync(Country country);
         Task<int> DeleteAsync(int countryId);
     }
 }
