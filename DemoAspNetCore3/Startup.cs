@@ -63,6 +63,8 @@ namespace DemoAspNetCore3
 
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICountryRepository, EFCountryRepository>();
+
+            services.AddApplicationInsightsTelemetry();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
