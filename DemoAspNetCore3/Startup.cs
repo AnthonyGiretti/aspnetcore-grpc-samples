@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DemoAspNetCore3.Middlewares;
 using DemoAspNetCore3.Services;
 using DemoGrpc.Repository;
 using DemoGrpc.Repository.Database;

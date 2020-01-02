@@ -20,7 +20,7 @@ namespace DemoGrpc.Web.Services
             _mapper = mapper;
         }
 
-        [Authorize]
+        //[Authorize]
         public override async Task<CountriesReply> GetAll(EmptyRequest request, ServerCallContext context)
         {
             try
@@ -34,7 +34,7 @@ namespace DemoGrpc.Web.Services
             }
         }
 
-        [Authorize]
+        //[Authorize]
         public override async Task<CountryReply> GetById(CountrySearchRequest request, ServerCallContext context)
         {
             var currentUser = context.GetHttpContext().User;
@@ -49,12 +49,13 @@ namespace DemoGrpc.Web.Services
             }
         }
 
-        [Authorize]
+        //[Authorize]
         public override async Task<CountryReply> Create(CountryCreateRequest request, ServerCallContext context)
         {
-            var currentUser = context.GetHttpContext().User;
+            //var currentUser = context.GetHttpContext().User;
             try
             {
+                throw new Exception();
                 var createCountry = _mapper.Map<Country>(request);
                 var country = await _countryService.AddAsync(createCountry);
                 return _mapper.Map<CountryReply>(country);
@@ -65,7 +66,7 @@ namespace DemoGrpc.Web.Services
             }
         }
 
-        [Authorize]
+        //[Authorize]
         public override async Task<CountryReply> Update(CountryRequest request, ServerCallContext context)
         {
             var currentUser = context.GetHttpContext().User;
@@ -81,7 +82,7 @@ namespace DemoGrpc.Web.Services
             }
         }
 
-        [Authorize]
+        //[Authorize]
         public override async Task<EmptyReply> Delete(CountrySearchRequest request, ServerCallContext context)
         {
             var currentUser = context.GetHttpContext().User;

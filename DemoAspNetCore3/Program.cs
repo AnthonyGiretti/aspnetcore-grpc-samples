@@ -20,11 +20,6 @@ namespace DemoAspNetCore3
                     webBuilder.UseStartup<Startup>();
                 }).ConfigureAppConfiguration((context, config) =>
                 {
-                    //config.SetBasePath(Directory.GetCurrentDirectory())
-                    //      .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                    //      .AddEnvironmentVariables()
-                    //      .AddUserSecrets<Startup>();
-
                     config.AddUserSecrets<Startup>();
 
                     var builtConfig = config.Build();
