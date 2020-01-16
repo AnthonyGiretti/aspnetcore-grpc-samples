@@ -47,7 +47,7 @@ namespace DemoAspNetCore3
 
             services.AddAuthorization();
 
-            services.AddDbContext<DemoDbContext>(options => options.UseSqlServer(Configuration["MySecretConnectionString"]));
+            services.AddDbContext<DemoDbContext>(options => options.UseInMemoryDatabase(databaseName :"counry_db"));
 
             services.AddGrpc(options =>
             {

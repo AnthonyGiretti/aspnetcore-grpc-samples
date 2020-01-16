@@ -33,7 +33,7 @@ namespace ConsoleAppGRPC
             services.AddGrpcClient<CountryServiceClient>(o =>
             {
                 o.Address = new Uri("https://localhost:5001");
-            }).AddPolicyHandler(retryFunc);
+            }); //.AddPolicyHandler(retryFunc);
 
             var provider = services.BuildServiceProvider();
 

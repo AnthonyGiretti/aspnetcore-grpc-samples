@@ -55,7 +55,7 @@ namespace DemoGrpc.Web.Services
             //var currentUser = context.GetHttpContext().User;
             try
             {
-                throw new Exception();
+                //throw new Exception();
                 var createCountry = _mapper.Map<Country>(request);
                 var country = await _countryService.AddAsync(createCountry);
                 return _mapper.Map<CountryReply>(country);
