@@ -53,9 +53,9 @@ namespace DemoGrpc.Web.Services
         public override async Task<CountryReply> Create(CountryCreateRequest request, ServerCallContext context)
         {
             //var currentUser = context.GetHttpContext().User;
+            //throw new RpcException(new Status(StatusCode.InvalidArgument,"test"), "test");
             try
             {
-                throw new Exception();
                 var createCountry = _mapper.Map<Country>(request);
                 var country = await _countryService.AddAsync(createCountry);
                 return _mapper.Map<CountryReply>(country);

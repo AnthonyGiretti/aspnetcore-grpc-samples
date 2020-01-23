@@ -41,8 +41,9 @@ namespace ConsoleAppGRPC
             
             try
             {
+                
                 // Create 
-                var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "rising sun country" }); // Remove Name or Description to test validation
+                var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "Rising sun country" }); // Remove Name or Description to test validation
                 var country = new Country
                 {
                     CountryId = createdCountry.Id,
@@ -88,7 +89,7 @@ namespace ConsoleAppGRPC
             }
             catch (RpcException e)
             {
-
+                Console.WriteLine(e.Message);
             }
         }
     }

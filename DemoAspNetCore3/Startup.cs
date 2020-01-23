@@ -55,8 +55,9 @@ namespace DemoAspNetCore3
                 options.Interceptors.Add<LoggerInterceptor>();
             });
 
-            services.AddValidatorLocator();
             services.AddValidator<CountryCreateRequestValidator>();
+
+            services.AddGrpcValidation();
 
             services.AddAutoMapper(Assembly.Load("DemoGrpc.Web"));
 
@@ -76,6 +77,8 @@ namespace DemoAspNetCore3
 
             app.UseRouting();
 
+            //app.UseGrpcWeb();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -83,8 +86,8 @@ namespace DemoAspNetCore3
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<MyOwnGRpcService>(); 
-                endpoints.MapGrpcService<CountryGrpcService>();
+                endpoints.MapGrpcService<MyOwnGRpcService>();
+                endpoints.MapGrpcService<CountryGrpcService>();//.EnableGrpcWeb();
 
                 endpoints.MapGet("/", async context =>
                 {
