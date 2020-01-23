@@ -29,7 +29,7 @@ namespace Grpc.AspNetCore.FluentValidation.Internal
                 {
                     var message = await _handler.HandleAsync(results.Errors);
                     context.Status = new Status(StatusCode.InvalidArgument, message);
-                    context.GetHttpContext().Response.Headers["grpc-status"] = "3";
+                    context.GetHttpContext().Response.Headers[GrpcProtocolConstants.StatusTrailerName] = GrpcProtocolConstants.StatusTrailerInvalidArgument;
                     return ObjectCreator<TResponse>.Empty;
                 }
             }
