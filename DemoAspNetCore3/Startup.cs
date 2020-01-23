@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Calzolari.Grpc.AspNetCore.FluentValidation;
 using DemoAspNetCore3.Services;
 using DemoGrpc.Repository;
 using DemoGrpc.Repository.Database;
@@ -8,7 +9,6 @@ using DemoGrpc.Web.Services;
 using DemoGrpc.Web.Validator;
 using DempGrpc.Services;
 using DempGrpc.Services.Interfaces;
-using Grpc.AspNetCore.FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

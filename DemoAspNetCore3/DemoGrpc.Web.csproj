@@ -12,12 +12,12 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Calzolari.Grpc.AspNetCore.Validation" Version="3.0.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.26.0" />
     <PackageReference Include="Grpc.Tools" Version="2.26.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <!--<PackageReference Include="GrpcExtensions.AspNetCore.Validation" Version="2.25.1" />-->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="3.1.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.12.0" />
@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DempGrpc.Services\DempGrpc.Services.csproj" />
-    <ProjectReference Include="..\Grpc.AspNetCore.FluentValidation\Grpc.AspNetCore.FluentValidation.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoGrpc.Repository", "Demo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoGrpc.Domain", "DemoGrpc.Domain\DemoGrpc.Domain.csproj", "{BA6E662A-82CA-40B0-8C03-F50B986EE9AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grpc.AspNetCore.FluentValidation", "Grpc.AspNetCore.FluentValidation\Grpc.AspNetCore.FluentValidation.csproj", "{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,18 +83,6 @@ Global
 		{BA6E662A-82CA-40B0-8C03-F50B986EE9AE}.Release|iPhone.Build.0 = Release|Any CPU
 		{BA6E662A-82CA-40B0-8C03-F50B986EE9AE}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{BA6E662A-82CA-40B0-8C03-F50B986EE9AE}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Release|iPhone.Build.0 = Release|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{14AD90F7-76EF-4DDC-BA72-AC3CEF19E584}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
