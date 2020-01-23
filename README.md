@@ -21,3 +21,5 @@ Sample of .NET Core 3.1 client CRUD consumption
 Sample of .NET Core 3.1 client using Polly resiliency
 
 Sample of integration tests (work in progess)
+
+Sample of healthcheck (work in progess)
