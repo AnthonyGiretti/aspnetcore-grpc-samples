@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Calzolari.Grpc.AspNetCore.Validation" Version="3.0.0" />
+    <PackageReference Include="Calzolari.Grpc.AspNetCore.Validation" Version="3.1.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.26.0" />
     <PackageReference Include="Grpc.Tools" Version="2.26.0">
       <PrivateAssets>all</PrivateAssets>

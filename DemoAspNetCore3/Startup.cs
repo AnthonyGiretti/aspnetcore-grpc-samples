@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Calzolari.Grpc.AspNetCore.FluentValidation;
+using Calzolari.Grpc.AspNetCore.Validation;
 using DemoAspNetCore3.Services;
 using DemoGrpc.Repository;
 using DemoGrpc.Repository.Database;

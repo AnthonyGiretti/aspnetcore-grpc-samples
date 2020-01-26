@@ -1,12 +1,11 @@
-﻿using DemoGrpc.Domain.Entities;
+﻿using Calzolari.Grpc.Net.Client.Validation;
+using DemoGrpc.Domain.Entities;
 using DemoGrpc.Protobufs;
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
-using Polly.Extensions.Http;
 using System;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using static DemoGrpc.Protobufs.CountryService;
@@ -22,12 +21,15 @@ namespace ConsoleAppGRPC
 
             Func<HttpRequestMessage, IAsyncPolicy<HttpResponseMessage>> retryFunc = (request) =>
             {
-                return Policy.HandleResult<HttpResponseMessage>(r => r.Headers.GetValues("grpc-status").FirstOrDefault() != "0")
-                             .WaitAndRetryAsync(3, (input) => TimeSpan.FromSeconds(3 + input), (result, timeSpan, retryCount, context) =>
-                                                    {
-                                                        var grpcStatus = (StatusCode)int.Parse(result.Result.Headers.GetValues("grpc-status").FirstOrDefault());
-                                                        Console.WriteLine($"Request failed with {grpcStatus}. Retry");
-                                                    });
+                return Policy.HandleResult<HttpResponseMessage>(r => { 
+                    var grpcStatus = (StatusCode)int.Parse(r.Headers.GetValues("grpc-status").FirstOrDefault());
+                    return grpcStatus != StatusCode.OK && grpcStatus != StatusCode.InvalidArgument;
+                })
+                .WaitAndRetryAsync(3, (input) => TimeSpan.FromSeconds(3 + input), (result, timeSpan, retryCount, context) =>
+                                    {
+                                        var grpcStatus = (StatusCode)int.Parse(result.Result.Headers.GetValues("grpc-status").FirstOrDefault());
+                                        Console.WriteLine($"Request failed with {grpcStatus}. Retry");
+                                    });
             };
 
             services.AddGrpcClient<CountryServiceClient>(o =>
@@ -43,7 +45,7 @@ namespace ConsoleAppGRPC
             {
                 
                 // Create 
-                var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "Rising sun country" }); // Remove Name or Description to test validation
+                var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "rising sun country, Nippon!!!" }); // Remove Name or Description to test validation
                 var country = new Country
                 {
                     CountryId = createdCountry.Id,
@@ -86,9 +88,11 @@ namespace ConsoleAppGRPC
 
                 Console.WriteLine("Found countries");
                 countries.ForEach(x => Console.WriteLine($"Found country {x.CountryName} ({x.CountryId}) {x.Description}"));
+                
             }
             catch (RpcException e)
             {
+                var errors = e.GetValidationErrors(); // Gets validation errors list
                 Console.WriteLine(e.Message);
             }
         }
