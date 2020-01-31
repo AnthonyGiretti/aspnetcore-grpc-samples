@@ -35,7 +35,7 @@ namespace ConsoleAppGRPC
             services.AddGrpcClient<CountryServiceClient>(o =>
             {
                 o.Address = new Uri("https://localhost:5001");
-            }).AddPolicyHandler(retryFunc);
+            });//.AddPolicyHandler(retryFunc);
 
             var provider = services.BuildServiceProvider();
 
@@ -45,7 +45,7 @@ namespace ConsoleAppGRPC
             {
                 
                 // Create 
-                var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "rising sun country, Nippon!!!" }); // Remove Name or Description to test validation
+                var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "rising sun country, Nippon!" }); // Remove Name or Description to test validation
                 var country = new Country
                 {
                     CountryId = createdCountry.Id,
