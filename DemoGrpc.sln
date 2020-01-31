@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DempGrpc.Services", "DempGr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoGrpc.Repository", "DemoGrpc.Repository\DemoGrpc.Repository.csproj", "{3D61B027-2CDB-4439-8A39-2B34B3539BBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoGrpc.Domain", "DemoGrpc.Domain\DemoGrpc.Domain.csproj", "{C444F0F2-443D-4530-B7E5-C024C86D75F4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calzolari.Grpc.Net.Client.Validation", "..\..\grpc-aspnetcore-validator\src\Calzolari.Grpc.Net.Client.Validation\Calzolari.Grpc.Net.Client.Validation.csproj", "{BE8596AA-E230-46CA-9D79-79EB9FC976E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoGrpc.Domain", "DemoGrpc.Domain\DemoGrpc.Domain.csproj", "{C444F0F2-443D-4530-B7E5-C024C86D75F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,18 +83,6 @@ Global
 		{C444F0F2-443D-4530-B7E5-C024C86D75F4}.Release|iPhone.Build.0 = Release|Any CPU
 		{C444F0F2-443D-4530-B7E5-C024C86D75F4}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{C444F0F2-443D-4530-B7E5-C024C86D75F4}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Release|iPhone.Build.0 = Release|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{BE8596AA-E230-46CA-9D79-79EB9FC976E9}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

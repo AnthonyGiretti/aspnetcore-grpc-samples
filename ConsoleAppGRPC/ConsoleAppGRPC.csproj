@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\grpc-aspnetcore-validator\src\Calzolari.Grpc.Net.Client.Validation\Calzolari.Grpc.Net.Client.Validation.csproj" />
     <ProjectReference Include="..\DemoGrpc.Domain\DemoGrpc.Domain.csproj" />
   </ItemGroup>
 
