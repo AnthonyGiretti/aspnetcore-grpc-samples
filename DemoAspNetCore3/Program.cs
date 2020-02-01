@@ -22,12 +22,12 @@ namespace DemoAspNetCore3
                 {
                     config.AddUserSecrets<Startup>();
 
-                    var builtConfig = config.Build();
-                    config.AddAzureKeyVault(
-                        $"https://{builtConfig["KeyVault:Vault"]}.vault.azure.net/",
-                        builtConfig["KeyVault:ClientId"],
-                        builtConfig["KeyVault:ClientSecret"],
-                        new DefaultKeyVaultSecretManager());
+                    //var builtConfig = config.Build();
+                    //config.AddAzureKeyVault(
+                    //    $"https://{builtConfig["KeyVault:Vault"]}.vault.azure.net/",
+                    //    builtConfig["KeyVault:ClientId"],
+                    //    builtConfig["KeyVault:ClientSecret"],
+                    //    new DefaultKeyVaultSecretManager());
                 });
     }
 }

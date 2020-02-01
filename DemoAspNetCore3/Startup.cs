@@ -47,7 +47,7 @@ namespace DemoAspNetCore3
 
             services.AddAuthorization();
 
-            services.AddDbContext<DemoDbContext>(options => options.UseSqlServer(Configuration["MySecretConnectionString"]));
+            services.AddDbContext<DemoDbContext>(options => options.UseSqlServer("Data source = (localdb)\\MSSQLLocalDB; initial catalog = DemoOrmLite; integrated security = True;"));
 
             services.AddCors(options =>
             {
