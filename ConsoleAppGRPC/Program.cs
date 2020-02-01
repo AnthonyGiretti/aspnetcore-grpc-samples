@@ -9,6 +9,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using static DemoGrpc.Protobufs.CountryService;
+using Grpc.Net.Client.Web;
+using Grpc.Net.Client;
 
 namespace ConsoleAppGRPC
 {
@@ -21,8 +23,9 @@ namespace ConsoleAppGRPC
 
             Func<HttpRequestMessage, IAsyncPolicy<HttpResponseMessage>> retryFunc = (request) =>
             {
-                return Policy.HandleResult<HttpResponseMessage>(r => { 
-                    var grpcStatus = (StatusCode)int.Parse(r.Headers.GetValues("grpc-status").FirstOrDefault());
+                return Policy.HandleResult<HttpResponseMessage>(r => {
+                    var headers = r.Headers;
+                    var grpcStatus = (StatusCode)int.Parse(headers.GetValues("grpc-status").FirstOrDefault());
                     return grpcStatus != StatusCode.OK && grpcStatus != StatusCode.InvalidArgument;
                 })
                 .WaitAndRetryAsync(3, (input) => TimeSpan.FromSeconds(3 + input), (result, timeSpan, retryCount, context) =>
@@ -32,18 +35,25 @@ namespace ConsoleAppGRPC
                                     });
             };
 
+            // gRPC
             services.AddGrpcClient<CountryServiceClient>(o =>
             {
                 o.Address = new Uri("https://localhost:5001");
-            });//.AddPolicyHandler(retryFunc);
-
+            });
             var provider = services.BuildServiceProvider();
-
             var client = provider.GetRequiredService<CountryServiceClient>();
-            
+
+            // gRPC-Web
+            var handler = new GrpcWebHandler(GrpcWebMode.GrpcWebText, new HttpClientHandler());
+            var channel = GrpcChannel.ForAddress("https://localhost:5001", new GrpcChannelOptions
+            {
+                HttpClient = new HttpClient(handler)
+            });
+            var clientWeb = new CountryServiceClient(channel);
+
             try
             {
-                
+                /*
                 // Create 
                 var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "rising sun country, Nippon!" }); // Remove Name or Description to test validation
                 var country = new Country
@@ -54,6 +64,7 @@ namespace ConsoleAppGRPC
                 };
                 Console.WriteLine($"Country {country.CountryName} ({country.CountryId}) created!");
 
+                
                 // GetById
                 var foundCountry = await client.GetByIdAsync(new CountrySearchRequest { CountryId = country.CountryId });
                 country = new Country
@@ -64,6 +75,7 @@ namespace ConsoleAppGRPC
                 };
                 Console.WriteLine($"Found country {country.CountryName} ({country.CountryId})");
 
+                
                 // Update 
                 var updatedCountry = await client.UpdateAsync(new CountryRequest { Id = country.CountryId, Name = "Japan", Description = "rising sun country, Nippon!!!" });
                 country = new Country
@@ -77,8 +89,9 @@ namespace ConsoleAppGRPC
                 // Delete
                 await client.DeleteAsync(new CountrySearchRequest { CountryId = country.CountryId });
                 Console.WriteLine($"Deleted country {country.CountryName} ({country.CountryId})");
+                */
 
-                // Get all
+                // Get all gRPC
                 var countries = (await client.GetAllAsync(new EmptyRequest())).Countries.Select(x => new Country
                 {
                     CountryId = x.Id,
@@ -88,7 +101,18 @@ namespace ConsoleAppGRPC
 
                 Console.WriteLine("Found countries");
                 countries.ForEach(x => Console.WriteLine($"Found country {x.CountryName} ({x.CountryId}) {x.Description}"));
-                
+
+                // Get all gRPC-web
+                var countriesweb = (await clientWeb.GetAllAsync(new EmptyRequest())).Countries.Select(x => new Country
+                {
+                    CountryId = x.Id,
+                    Description = x.Description,
+                    CountryName = x.Name
+                }).ToList();
+
+                Console.WriteLine("Found countries with gRPC-Web");
+                countriesweb.ForEach(x => Console.WriteLine($"Found country with gRPC-Web:  {x.CountryName} ({x.CountryId}) {x.Description}"));
+
             }
             catch (RpcException e)
             {

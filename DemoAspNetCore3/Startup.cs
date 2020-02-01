@@ -77,17 +77,15 @@ namespace DemoAspNetCore3
 
             app.UseRouting();
 
-            //app.UseGrpcWeb();
+            app.UseGrpcWeb();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //app.UseMiddleware<CustomExceptionMiddleware>();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<MyOwnGRpcService>();
-                endpoints.MapGrpcService<CountryGrpcService>();//.EnableGrpcWeb();
+                endpoints.MapGrpcService<CountryGrpcService>().EnableGrpcWeb();
 
                 endpoints.MapGet("/", async context =>
                 {
