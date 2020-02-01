@@ -49,6 +49,17 @@ namespace DemoAspNetCore3
 
             services.AddDbContext<DemoDbContext>(options => options.UseSqlServer(Configuration["MySecretConnectionString"]));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyPolicy",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
             services.AddGrpc(options =>
             {
                 options.EnableMessageValidation();
@@ -76,6 +87,8 @@ namespace DemoAspNetCore3
             }
 
             app.UseRouting();
+
+            app.UseCors("MyPolicy");
 
             app.UseGrpcWeb();
 
