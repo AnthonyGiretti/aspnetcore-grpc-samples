@@ -6,7 +6,7 @@ Sample of Repository pattern with EF Core 3
 
 Sample of gRPC CRUD operation
 
-Sample of gRPC request Validation with [https://github.com/enif-lee/grpc-dotnet-validator]
+Sample of gRPC request Validation with [https://github.com/AnthonyGiretti/grpc-aspnetcore-validator]
 
 Sample of mapping with AutoMapper
 
