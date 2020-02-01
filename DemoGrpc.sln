@@ -13,6 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoGrpc.Repository", "Demo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoGrpc.Domain", "DemoGrpc.Domain\DemoGrpc.Domain.csproj", "{C444F0F2-443D-4530-B7E5-C024C86D75F4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{25119464-767D-459B-A3A8-A74F2CD72F81}"
+	ProjectSection(SolutionItems) = preProject
+		Database\Create dbo.Country.sql = Database\Create dbo.Country.sql
+		Database\dbo.Country.data.sql = Database\dbo.Country.data.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
