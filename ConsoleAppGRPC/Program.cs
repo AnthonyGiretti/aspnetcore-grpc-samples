@@ -26,7 +26,7 @@ namespace ConsoleAppGRPC
             {
                 return Policy.HandleResult<HttpResponseMessage>(r => {
                     var grpcStatus = StatusManager.GetStatusCode(r);
-                    return grpcStatus != StatusCode.OK && grpcStatus != StatusCode.InvalidArgument;
+                    return r.StatusCode != HttpStatusCode.OK && grpcStatus != StatusCode.OK && grpcStatus != StatusCode.InvalidArgument;
                 })
                 .WaitAndRetryAsync(3, (input) => TimeSpan.FromSeconds(3 + input), (result, timeSpan, retryCount, context) =>
                                     {
@@ -44,7 +44,7 @@ namespace ConsoleAppGRPC
             var provider = services.BuildServiceProvider();
             var client = provider.GetRequiredService<CountryServiceClient>();
 
-            /*
+            
             // gRPC-Web
             var handler = new GrpcWebHandler(GrpcWebMode.GrpcWebText, new HttpClientHandler());
             var channel = GrpcChannel.ForAddress("https://localhost:5001", new GrpcChannelOptions
@@ -52,7 +52,7 @@ namespace ConsoleAppGRPC
                 HttpClient = new HttpClient(handler)
             });
             var clientWeb = new CountryServiceClient(channel);
-            */
+            
 
             try
             {
