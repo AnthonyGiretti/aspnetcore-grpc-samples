@@ -1,5 +1,14 @@
 # Samples of gRPC services in ASP.NET Core 3.1 (work in progress)
 
+## Prerequistes 
+
+Create a database, don't forget to adjust the name of it in your connectionstring and in the sql files
+
+Create table with Sql file: https://github.com/AnthonyGiretti/aspnetcore3-grpc-samples/blob/master/Database/Create%20dbo.Country.sql
+
+Feed the table with Sql file: https://github.com/AnthonyGiretti/aspnetcore3-grpc-samples/blob/master/Database/dbo.Country.data.sql
+
+## Samples
 Sample of Layered architecture (Ntier)
 
 Sample of Repository pattern with EF Core 3
