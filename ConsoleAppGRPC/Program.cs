@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using static DemoGrpc.Protobufs.CountryService;
 using Grpc.Net.Client.Web;
 using Grpc.Net.Client;
+using System.Net;
 
 namespace ConsoleAppGRPC
 {
@@ -24,25 +25,26 @@ namespace ConsoleAppGRPC
             Func<HttpRequestMessage, IAsyncPolicy<HttpResponseMessage>> retryFunc = (request) =>
             {
                 return Policy.HandleResult<HttpResponseMessage>(r => {
-                    var headers = r.Headers;
-                    var grpcStatus = (StatusCode)int.Parse(headers.GetValues("grpc-status").FirstOrDefault());
+                    var grpcStatus = StatusManager.GetStatusCode(r);
                     return grpcStatus != StatusCode.OK && grpcStatus != StatusCode.InvalidArgument;
                 })
                 .WaitAndRetryAsync(3, (input) => TimeSpan.FromSeconds(3 + input), (result, timeSpan, retryCount, context) =>
                                     {
-                                        var grpcStatus = (StatusCode)int.Parse(result.Result.Headers.GetValues("grpc-status").FirstOrDefault());
+                                        var grpcStatus = StatusManager.GetStatusCode(result.Result);
                                         Console.WriteLine($"Request failed with {grpcStatus}. Retry");
                                     });
             };
 
+            // https://grpcwebdemo.azurewebsites.net
             // gRPC
             services.AddGrpcClient<CountryServiceClient>(o =>
             {
                 o.Address = new Uri("https://localhost:5001");
-            });
+            }).AddPolicyHandler(retryFunc);
             var provider = services.BuildServiceProvider();
             var client = provider.GetRequiredService<CountryServiceClient>();
 
+            /*
             // gRPC-Web
             var handler = new GrpcWebHandler(GrpcWebMode.GrpcWebText, new HttpClientHandler());
             var channel = GrpcChannel.ForAddress("https://localhost:5001", new GrpcChannelOptions
@@ -50,12 +52,13 @@ namespace ConsoleAppGRPC
                 HttpClient = new HttpClient(handler)
             });
             var clientWeb = new CountryServiceClient(channel);
+            */
 
             try
             {
                 /*
                 // Create 
-                var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "rising sun country, Nippon!" }); // Remove Name or Description to test validation
+                var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "" }); // Remove Name or Description to test validation
                 var country = new Country
                 {
                     CountryId = createdCountry.Id,
@@ -64,7 +67,7 @@ namespace ConsoleAppGRPC
                 };
                 Console.WriteLine($"Country {country.CountryName} ({country.CountryId}) created!");
 
-                
+
                 // GetById
                 var foundCountry = await client.GetByIdAsync(new CountrySearchRequest { CountryId = country.CountryId });
                 country = new Country
@@ -102,6 +105,7 @@ namespace ConsoleAppGRPC
                 Console.WriteLine("Found countries");
                 countries.ForEach(x => Console.WriteLine($"Found country {x.CountryName} ({x.CountryId}) {x.Description}"));
 
+                /*
                 // Get all gRPC-web
                 var countriesweb = (await clientWeb.GetAllAsync(new EmptyRequest())).Countries.Select(x => new Country
                 {
@@ -112,6 +116,7 @@ namespace ConsoleAppGRPC
 
                 Console.WriteLine("Found countries with gRPC-Web");
                 countriesweb.ForEach(x => Console.WriteLine($"Found country with gRPC-Web:  {x.CountryName} ({x.CountryId}) {x.Description}"));
+                */
 
             }
             catch (RpcException e)
