@@ -12,6 +12,7 @@ using static DemoGrpc.Protobufs.CountryService;
 using Grpc.Net.Client.Web;
 using Grpc.Net.Client;
 using System.Net;
+using Microsoft.Extensions.Logging;
 
 namespace ConsoleAppGRPC
 {
@@ -21,6 +22,12 @@ namespace ConsoleAppGRPC
         {
             // DI
             var services = new ServiceCollection();
+
+            var loggerFactory = LoggerFactory.Create(logging =>
+            {
+                logging.AddConsole();
+                logging.SetMinimumLevel(LogLevel.Debug);
+            });
 
             Func<HttpRequestMessage, IAsyncPolicy<HttpResponseMessage>> retryFunc = (request) =>
             {
@@ -35,6 +42,7 @@ namespace ConsoleAppGRPC
                                     });
             };
 
+            /*
             // https://grpcwebdemo.azurewebsites.net
             // gRPC
             services.AddGrpcClient<CountryServiceClient>(o =>
@@ -43,17 +51,18 @@ namespace ConsoleAppGRPC
             }).AddPolicyHandler(retryFunc);
             var provider = services.BuildServiceProvider();
             var client = provider.GetRequiredService<CountryServiceClient>();
+            */
 
             
             // gRPC-Web
-            var handler = new GrpcWebHandler(GrpcWebMode.GrpcWebText, new HttpClientHandler());
-            var channel = GrpcChannel.ForAddress("https://localhost:5001", new GrpcChannelOptions
+            var handler = new GrpcWebHandler(GrpcWebMode.GrpcWebText, HttpVersion.Version11, new HttpClientHandler());
+            var channel = GrpcChannel.ForAddress("https://grpcwebdemo.azurewebsites.net", new GrpcChannelOptions
             {
-                HttpClient = new HttpClient(handler)
+                HttpClient = new HttpClient(handler),
+                LoggerFactory = loggerFactory
             });
             var clientWeb = new CountryServiceClient(channel);
             
-
             try
             {
                 /*
@@ -94,6 +103,7 @@ namespace ConsoleAppGRPC
                 Console.WriteLine($"Deleted country {country.CountryName} ({country.CountryId})");
                 */
 
+                /*
                 // Get all gRPC
                 var countries = (await client.GetAllAsync(new EmptyRequest())).Countries.Select(x => new Country
                 {
@@ -104,8 +114,9 @@ namespace ConsoleAppGRPC
 
                 Console.WriteLine("Found countries");
                 countries.ForEach(x => Console.WriteLine($"Found country {x.CountryName} ({x.CountryId}) {x.Description}"));
+                */
 
-                /*
+                
                 // Get all gRPC-web
                 var countriesweb = (await clientWeb.GetAllAsync(new EmptyRequest())).Countries.Select(x => new Country
                 {
@@ -116,7 +127,7 @@ namespace ConsoleAppGRPC
 
                 Console.WriteLine("Found countries with gRPC-Web");
                 countriesweb.ForEach(x => Console.WriteLine($"Found country with gRPC-Web:  {x.CountryName} ({x.CountryId}) {x.Description}"));
-                */
+               
 
             }
             catch (RpcException e)

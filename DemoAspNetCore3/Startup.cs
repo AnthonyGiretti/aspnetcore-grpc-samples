@@ -33,19 +33,19 @@ namespace DemoAspNetCore3
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = "https://login.microsoftonline.com/136544d9-038e-4646-afff-10accb370679";
-                options.Audience = "257b6c36-1168-4aac-be93-6f2cd81cec43";
-                options.TokenValidationParameters.ValidateLifetime = true;
-                options.TokenValidationParameters.ClockSkew = TimeSpan.Zero;
-            });
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.Authority = "https://login.microsoftonline.com/136544d9-038e-4646-afff-10accb370679";
+            //    options.Audience = "257b6c36-1168-4aac-be93-6f2cd81cec43";
+            //    options.TokenValidationParameters.ValidateLifetime = true;
+            //    options.TokenValidationParameters.ClockSkew = TimeSpan.Zero;
+            //});
 
-            services.AddAuthorization();
+            //services.AddAuthorization();
 
             services.AddDbContext<DemoDbContext>(options => options.UseInMemoryDatabase(databaseName: "country_db"));
 
@@ -102,7 +102,7 @@ namespace DemoAspNetCore3
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICountryRepository, EFCountryRepository>();
 
-            services.AddApplicationInsightsTelemetry();
+            //services.AddApplicationInsightsTelemetry();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -115,8 +115,8 @@ namespace DemoAspNetCore3
 
             app.UseGrpcWeb();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

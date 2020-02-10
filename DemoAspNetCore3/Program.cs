@@ -20,7 +20,7 @@ namespace DemoAspNetCore3
                     webBuilder.UseStartup<Startup>();
                 }).ConfigureAppConfiguration((context, config) =>
                 {
-                    config.AddUserSecrets<Startup>();
+                    //config.AddUserSecrets<Startup>();
 
                     //var builtConfig = config.Build();
                     //config.AddAzureKeyVault(
