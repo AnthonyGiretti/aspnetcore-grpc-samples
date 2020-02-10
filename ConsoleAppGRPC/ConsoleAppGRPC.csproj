@@ -31,6 +31,9 @@
     <Protobuf Include="..\DemoAspNetCore3\Protos\country.proto" GrpcServices="Client">
       <Link>Protos\country.proto</Link>
     </Protobuf>
+    <Protobuf Include="..\DemoAspNetCore3\Protos\greet.proto" GrpcServices="Client">
+      <Link>Protos\greet.proto</Link>
+    </Protobuf>
   </ItemGroup>
 
 </Project>
