@@ -47,23 +47,50 @@ namespace DemoAspNetCore3
 
             services.AddAuthorization();
 
-            services.AddDbContext<DemoDbContext>(options => options.UseSqlServer("Data source = (localdb)\\MSSQLLocalDB; initial catalog = DemoOrmLite; integrated security = True;"));
+            services.AddDbContext<DemoDbContext>(options => options.UseInMemoryDatabase(databaseName: "country_db"));
 
-            services.AddCors(options =>
+            var serviceProvider = services.BuildServiceProvider();
+            using (var context = new DemoDbContext(
+            serviceProvider.GetRequiredService<DbContextOptions<DemoDbContext>>()))
             {
-                options.AddPolicy("MyPolicy",
-                builder =>
-                {
-                    builder.WithOrigins("http://localhost:4200")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-                });
-            });
+                context.Country.AddRange(
+                    new DemoGrpc.Domain.Entities.Country
+                    {
+                        CountryId = 1,
+                        CountryName = "Canada",
+                        Description = "Maple leaf country"
+                    },
+                    new DemoGrpc.Domain.Entities.Country
+                    {
+                        CountryId = 2,
+                        CountryName = "Japon",
+                        Description = "Rising sun country"
+                    },
+                    new DemoGrpc.Domain.Entities.Country
+                    {
+                        CountryId = 3,
+                        CountryName = "Australia",
+                        Description = "Wallabies country"
+                    });
+
+                context.SaveChanges();
+            }
 
             services.AddGrpc(options =>
             {
                 options.EnableMessageValidation();
                 options.Interceptors.Add<LoggerInterceptor>();
+            });
+
+            services.AddCors(o =>
+            {
+                o.AddPolicy("MyPolicy", builder =>
+                {
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyHeader();
+                    builder.WithExposedHeaders("Grpc-Status", "Grpc-Message");
+                });
             });
 
             services.AddValidator<CountryCreateRequestValidator>();
@@ -81,14 +108,10 @@ namespace DemoAspNetCore3
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            
             app.UseRouting();
 
-            app.UseCors("MyPolicy");
+            app.UseCors();
 
             app.UseGrpcWeb();
 
@@ -98,7 +121,7 @@ namespace DemoAspNetCore3
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<MyOwnGRpcService>();
-                endpoints.MapGrpcService<CountryGrpcService>().EnableGrpcWeb();
+                endpoints.MapGrpcService<CountryGrpcService>().RequireCors("MyPolicy").EnableGrpcWeb();
 
                 endpoints.MapGet("/", async context =>
                 {

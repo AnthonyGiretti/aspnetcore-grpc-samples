@@ -9,7 +9,6 @@ namespace DemoGrpc.Web.Validator
         {
             RuleFor(request => request.Name).NotEmpty().WithMessage("Name is mandatory.");
             RuleFor(request => request.Description).NotEmpty().WithMessage("Description is mandatory.");
-            RuleFor(request => request.Description).MinimumLength(2).WithMessage("Description is too short.");
         }
     }
 }
