@@ -54,13 +54,13 @@ namespace ConsoleAppGRPC
             */
 
             // gRPC-Web
-            //var handler = new GrpcWebHandler(GrpcWebMode.GrpcWebText, HttpVersion.Version11, new HttpClientHandler());
-            //var channel = GrpcChannel.ForAddress("https://grpcwebdemo.azurewebsites.net:8080", new GrpcChannelOptions
-            //{
-            //    HttpClient = new HttpClient(handler),
-            //    LoggerFactory = loggerFactory
-            //});
-            //var clientWeb = new CountryServiceClient(channel);
+            var handler = new GrpcWebHandler(GrpcWebMode.GrpcWebText, new HttpClientHandler());
+            var channel = GrpcChannel.ForAddress("https://localhost:5001", new GrpcChannelOptions
+            {
+                HttpClient = new HttpClient(handler),
+                LoggerFactory = loggerFactory
+            });
+            var clientWeb = new CountryServiceClient(channel);
 
             try
             {
@@ -117,27 +117,27 @@ namespace ConsoleAppGRPC
 
 
                 // Get all gRPC-web
-                //var countriesweb = (await clientWeb.GetAllAsync(new EmptyRequest())).Countries.Select(x => new Country
-                //{
-                //    CountryId = x.Id,
-                //    Description = x.Description,
-                //    CountryName = x.Name
-                //}).ToList();
-
-                //Console.WriteLine("Found countries with gRPC-Web");
-                //countriesweb.ForEach(x => Console.WriteLine($"Found country with gRPC-Web:  {x.CountryName} ({x.CountryId}) {x.Description}"));
-
-
-                var handler2 = new GrpcWebHandler(GrpcWebMode.GrpcWebText, new HttpClientHandler());
-                var channel2 = GrpcChannel.ForAddress("https://grpcweb.azurewebsites.net", new GrpcChannelOptions
+                var countriesweb = (await clientWeb.GetAllAsync(new EmptyRequest())).Countries.Select(x => new Country
                 {
-                    HttpClient = new HttpClient(handler2),
-                    LoggerFactory = loggerFactory
-                });
-                var clientweb2 = new Greeter.GreeterClient(channel2);
-                var response = await clientweb2.SayHelloAsync(new HelloRequest { Name = ".NET" });
+                    CountryId = x.Id,
+                    Description = x.Description,
+                    CountryName = x.Name
+                }).ToList();
 
-                Console.WriteLine(response.Message);
+                Console.WriteLine("Found countries with gRPC-Web");
+                countriesweb.ForEach(x => Console.WriteLine($"Found country with gRPC-Web:  {x.CountryName} ({x.CountryId}) {x.Description}"));
+
+
+                //var handler2 = new GrpcWebHandler(GrpcWebMode.GrpcWebText, new HttpClientHandler());
+                //var channel2 = GrpcChannel.ForAddress("https://grpcweb.azurewebsites.net/", new GrpcChannelOptions
+                //{
+                //    HttpClient = new HttpClient(handler2),
+                //    LoggerFactory = loggerFactory
+                //});
+                //var clientweb2 = new Greeter.GreeterClient(channel2);
+                //var response = await clientweb2.SayHelloAsync(new HelloRequest { Name = ".NET" });
+
+                //Console.WriteLine(response.Message);
 
             }
             catch (RpcException e)
