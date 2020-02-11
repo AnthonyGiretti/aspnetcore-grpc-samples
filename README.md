@@ -8,6 +8,8 @@ Create table with Sql file: https://github.com/AnthonyGiretti/aspnetcore3-grpc-s
 
 Feed the table with Sql file: https://github.com/AnthonyGiretti/aspnetcore3-grpc-samples/blob/master/Database/dbo.Country.data.sql
 
+If you don't setup a database, the sample runs by default by In Memory database
+
 ## Samples
 Sample of Layered architecture (Ntier)
 
