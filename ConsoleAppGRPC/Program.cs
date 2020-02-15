@@ -55,7 +55,7 @@ namespace ConsoleAppGRPC
 
             // gRPC-Web
             var handler = new GrpcWebHandler(GrpcWebMode.GrpcWebText, new HttpClientHandler());
-            var channel = GrpcChannel.ForAddress("https://localhost:5001", new GrpcChannelOptions
+            var channel = GrpcChannel.ForAddress("https://grpcwebdemo.azurewebsites.net", new GrpcChannelOptions
             {
                 HttpClient = new HttpClient(handler),
                 LoggerFactory = loggerFactory
@@ -116,7 +116,7 @@ namespace ConsoleAppGRPC
                 */
 
 
-                // Get all gRPC-web
+                // Get all gRPC - web
                 var countriesweb = (await clientWeb.GetAllAsync(new EmptyRequest())).Countries.Select(x => new Country
                 {
                     CountryId = x.Id,
