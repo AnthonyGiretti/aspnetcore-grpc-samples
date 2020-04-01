@@ -26,6 +26,11 @@ namespace DemoGrpc.Web.Logging
             {
                 return await continuation(request, context);
             }
+            catch (RpcException e)
+            {
+                _logger.LogError(e, $"An error occured when calling {context.Method}");
+                throw e;
+            }
             catch (SqlException e)
             {
                 _logger.LogError(e, $"An SQL error occured when calling {context.Method}");
@@ -44,7 +49,7 @@ namespace DemoGrpc.Web.Logging
             catch (Exception e)
             {
                 _logger.LogError(e, $"An error occured when calling {context.Method}");
-                throw new RpcException(Status.DefaultCancelled, e.Message);
+                throw new RpcException(new Status(StatusCode.Cancelled, e.Message));
             }
             
         }

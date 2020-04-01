@@ -23,7 +23,7 @@ namespace DemoGrpc.Web.Services
         //[Authorize]
         public override async Task<CountriesReply> GetAll(EmptyRequest request, ServerCallContext context)
         {
-            throw new Exception("_countryService.GetAsync call failed");
+            throw new RpcException(new Status(StatusCode.Internal, "Internal error"), "Internal error occured");
             var countries = await _countryService.GetAsync();
             return _mapper.Map<CountriesReply>(countries);
         }
