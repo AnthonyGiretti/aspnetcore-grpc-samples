@@ -1,6 +1,8 @@
 ﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DemoGrpc.Web.Logging
@@ -14,13 +16,37 @@ namespace DemoGrpc.Web.Logging
             _logger = logger;
         }
 
-        public override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(
+        public async override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(
             TRequest request,
             ServerCallContext context,
             UnaryServerMethod<TRequest, TResponse> continuation)
         {
             LogCall(context);
-            return continuation(request, context);
+            try
+            {
+                return await continuation(request, context);
+            }
+            catch (SqlException e)
+            {
+                _logger.LogError(e, $"An SQL error occured when calling {context.Method}");
+                Status status;
+
+                if (e.Number == -2)
+                {
+                    status = new Status(StatusCode.DeadlineExceeded, "SQL timeout");
+                }
+                else
+                {
+                    status = new Status(StatusCode.Internal, "SQL error");
+                }
+                throw new RpcException(status);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occured when calling {context.Method}");
+                throw new RpcException(Status.DefaultCancelled, e.Message);
+            }
+            
         }
 
         private void LogCall(ServerCallContext context)
