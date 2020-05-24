@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoGrpc.Web", "DemoAspNetCore3\DemoGrpc.Web.csproj", "{02654D12-3379-42C6-B351-2A2082981CA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoGrpc.Web", "DemoGrpc.Web\DemoGrpc.Web.csproj", "{02654D12-3379-42C6-B351-2A2082981CA9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppGRPC", "ConsoleAppGRPC\ConsoleAppGRPC.csproj", "{C213B487-31AD-4C80-AFFD-986BEC04014E}"
 EndProject
