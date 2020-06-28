@@ -49,7 +49,7 @@ namespace DemoGrpc.Web.Logging
             catch (Exception e)
             {
                 _logger.LogError(e, $"An error occured when calling {context.Method}");
-                throw new RpcException(new Status(StatusCode.Cancelled, e.Message));
+                throw new RpcException(new Status(StatusCode.Internal, e.Message));
             }
             
         }

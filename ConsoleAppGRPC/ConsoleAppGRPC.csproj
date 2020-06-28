@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\country.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Calzolari.Grpc.Net.Client.Validation" Version="3.1.2" />
     <PackageReference Include="Google.Protobuf" Version="3.11.3" />
     <PackageReference Include="Grpc.Net.Client" Version="2.27.0" />
@@ -25,15 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\DemoAspNetCore3\Protos\myownservice.proto" GrpcServices="Client">
-      <Link>Protos\myownservice.proto</Link>
-    </Protobuf>
-    <Protobuf Include="..\DemoAspNetCore3\Protos\country.proto" GrpcServices="Client">
-      <Link>Protos\country.proto</Link>
-    </Protobuf>
-    <Protobuf Include="..\DemoAspNetCore3\Protos\greet.proto" GrpcServices="Client">
-      <Link>Protos\greet.proto</Link>
-    </Protobuf>
+    <Protobuf Include="Protos\country.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

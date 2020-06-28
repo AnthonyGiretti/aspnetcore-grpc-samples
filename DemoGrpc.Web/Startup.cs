@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Calzolari.Grpc.AspNetCore.Validation;
-using DemoAspNetCore3.Services;
 using DemoGrpc.Repository;
 using DemoGrpc.Repository.Database;
 using DemoGrpc.Repository.Interfaces;
@@ -130,7 +129,6 @@ namespace DemoAspNetCore3
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<MyOwnGRpcService>();
                 endpoints.MapGrpcService<CountryGrpcService>().RequireCors("MyPolicy").EnableGrpcWeb();
 
                 endpoints.MapGet("/", async context =>
