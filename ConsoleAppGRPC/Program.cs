@@ -8,12 +8,12 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static DemoGrpc.Protobufs.V1.CountryService;
 using Grpc.Net.Client.Web;
 using Grpc.Net.Client;
 using System.Net;
 using DemoGrpc.Protobufs.V1;
 using Microsoft.Extensions.Logging;
+using static DemoGrpc.Protobufs.V1.CountryService;
 
 namespace ConsoleAppGRPC
 {
