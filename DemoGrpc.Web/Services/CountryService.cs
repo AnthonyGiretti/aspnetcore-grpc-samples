@@ -6,8 +6,9 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Threading.Tasks;
+using DemoGrpc.Protobufs.V1;
 
-namespace DemoGrpc.Web.Services
+namespace DemoGrpc.Web.Services.V1
 {
     public class CountryGrpcService : CountryService.CountryServiceBase
     {

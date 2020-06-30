@@ -1,4 +1,5 @@
 ﻿using DemoGrpc.Protobufs;
+using DemoGrpc.Protobufs.V1;
 using FluentValidation;
 
 namespace DemoGrpc.Web.Validator

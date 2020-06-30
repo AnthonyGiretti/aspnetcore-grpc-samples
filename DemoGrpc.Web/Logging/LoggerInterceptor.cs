@@ -16,7 +16,7 @@ namespace DemoGrpc.Web.Logging
             _logger = logger;
         }
 
-        public async override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(
+        public override async Task<TResponse> UnaryServerHandler<TRequest, TResponse>(
             TRequest request,
             ServerCallContext context,
             UnaryServerMethod<TRequest, TResponse> continuation)

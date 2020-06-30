@@ -2,12 +2,13 @@
 using DemoGrpc.Domain.Entities;
 using DemoGrpc.Protobufs;
 using System.Collections.Generic;
+using DemoGrpc.Protobufs.V1;
 
 namespace DemoGrpc.Web.Mapping
 {
-    public class CountryProfiles : Profile
+    public class CountryProfilesV1 : Profile
     {
-        public CountryProfiles()
+        public CountryProfilesV1()
         {
             CreateMap<Country, CountryReply>()
             .ForMember(dest => dest.Id, source => source.MapFrom(src => src.CountryId))

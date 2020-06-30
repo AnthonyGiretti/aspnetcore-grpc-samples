@@ -1,6 +1,8 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "DemoGrpc.Protobufs";
+option csharp_namespace = "DemoGrpc.Protobufs.V1";
+
+package v1;
 
 service CountryService {
   rpc GetAll(EmptyRequest) returns (CountriesReply) {}
@@ -17,7 +19,7 @@ message EmptyReply {
 }
 
 message CountrySearchRequest {
-	int32 CountryId = 1;
+    int32 CountryId = 1;
 }
 
 message CountryCreateRequest {
@@ -26,17 +28,17 @@ message CountryCreateRequest {
 }
 
 message CountryRequest {
-	int32 Id = 1;
+    int32 Id = 1;
     string Name = 2;
     string Description = 3;
 }
 
 message CountryReply {
-	int32 Id = 1;
+    int32 Id = 1;
     string Name = 2;
     string Description = 3;
 }
 
 message CountriesReply {
-	repeated CountryReply Countries = 1;
+    repeated CountryReply Countries = 1;
 }

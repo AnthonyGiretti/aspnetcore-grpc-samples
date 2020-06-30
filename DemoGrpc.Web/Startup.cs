@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Reflection;
+using CountryGrpcServiceV1 = DemoGrpc.Web.Services.V1.CountryGrpcService;
 
 namespace DemoAspNetCore3
 {
@@ -129,7 +130,7 @@ namespace DemoAspNetCore3
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<CountryGrpcService>().RequireCors("MyPolicy").EnableGrpcWeb();
+                endpoints.MapGrpcService<CountryGrpcServiceV1>().RequireCors("MyPolicy").EnableGrpcWeb();
 
                 endpoints.MapGet("/", async context =>
                 {
