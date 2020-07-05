@@ -17,8 +17,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using CountryGrpcServiceV1 = DemoGrpc.Web.Services.V1.CountryGrpcService;
+using System.Linq;
+using System.Net;
 
 namespace DemoAspNetCore3
 {
@@ -103,6 +110,8 @@ namespace DemoAspNetCore3
             services.AddScoped<ICountryRepository, EFCountryRepository>();
 
             //services.AddApplicationInsightsTelemetry();
+
+            services.AddSingleton<ProtoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -130,11 +139,30 @@ namespace DemoAspNetCore3
 
             app.UseEndpoints(endpoints =>
             {
+                var protoService = endpoints.ServiceProvider.GetRequiredService<ProtoService>();
+
                 endpoints.MapGrpcService<CountryGrpcServiceV1>().RequireCors("MyPolicy").EnableGrpcWeb();
 
-                endpoints.MapGet("/", async context =>
+                endpoints.MapGet("/protos", async context =>
                 {
-                    await context.Response.WriteAsync("Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+                    await context.Response.WriteAsync(await protoService.Get());
+                });
+
+                endpoints.MapGet("/protos/v{version:int}/{protoName}", async context =>
+                {
+                    var version = int.Parse((string)context.Request.RouteValues["version"]);
+                    var protoName = (string)context.Request.RouteValues["protoName"];
+
+                    var filePath = await protoService.Get(version, protoName);
+
+                    if (filePath != null)
+                    {
+                        await context.Response.SendFileAsync(filePath);
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = (int) HttpStatusCode.NotFound;
+                    }
                 });
             });
         }
