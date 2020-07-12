@@ -39,11 +39,11 @@ namespace DemoGrpc.Web.Services
             return exist ? filePath : null;
         }
 
-        private Dictionary<string, IEnumerable<string>> Get(string baseDirectory)
-        {
-            return Directory.GetDirectories($"{baseDirectory}\\protos")
-                            .Select(x => new { version = x, protos = Directory.GetFiles(x).Select(Path.GetFileName)})
-                            .ToDictionary(o => Path.GetRelativePath("protos", o.version), o => o.protos);
-        }
+        private Dictionary<string, IEnumerable<string>> Get(string baseDirectory) => 
+
+            Directory.GetDirectories($"{baseDirectory}\\protos")
+            .Select(x => new { version = x, protos = Directory.GetFiles(x).Select(Path.GetFileName)})
+            .ToDictionary(o => Path.GetRelativePath("protos", o.version), o => o.protos);
+        
     }
 }
