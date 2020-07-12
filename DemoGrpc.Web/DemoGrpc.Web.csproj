@@ -29,4 +29,8 @@
     <ProjectReference Include="..\DempGrpc.Services\DempGrpc.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Protos\v3\" />
+  </ItemGroup>
+
 </Project>

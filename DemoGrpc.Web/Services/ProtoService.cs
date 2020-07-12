@@ -41,16 +41,9 @@ namespace DemoGrpc.Web.Services
 
         private Dictionary<string, IEnumerable<string>> Get(string baseDirectory)
         {
-            var folders = Directory.GetDirectories($"{baseDirectory}\\protos");
-
-            var protosByVersion = new Dictionary<string, IEnumerable<string>>();
-            foreach (var folder in folders)
-            {
-                var protos = Directory.GetFiles(folder).Select(x => Path.GetFileName(x));
-                protosByVersion.Add(Path.GetRelativePath("protos", folder), protos);
-            }
-
-            return protosByVersion;
+            return Directory.GetDirectories($"{baseDirectory}\\protos")
+                            .Select(x => new { version = x, protos = Directory.GetFiles(x).Select(Path.GetFileName)})
+                            .ToDictionary(o => Path.GetRelativePath("protos", o.version), o => o.protos);
         }
     }
 }
