@@ -31,7 +31,7 @@ namespace DemoGrpc.Web.Services
 
         }
 
-        public async Task<string> Get(int version, string protoName)
+        public string Get(int version, string protoName)
         {
             var filePath = $"{_baseDirectory}\\protos\\v{version}\\{protoName}";
             var exist = File.Exists(filePath);

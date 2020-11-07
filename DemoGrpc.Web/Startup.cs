@@ -153,7 +153,7 @@ namespace DemoAspNetCore3
                     var version = int.Parse((string)context.Request.RouteValues["version"]);
                     var protoName = (string)context.Request.RouteValues["protoName"];
 
-                    var filePath = await protoService.Get(version, protoName);
+                    var filePath = protoService.Get(version, protoName);
 
                     if (filePath != null)
                     {

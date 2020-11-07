@@ -31,21 +31,21 @@ namespace DemoGrpc.Web.Logging
                 _logger.LogError(e, $"An error occured when calling {context.Method}");
                 throw e;
             }
-            catch (SqlException e)
-            {
-                _logger.LogError(e, $"An SQL error occured when calling {context.Method}");
-                Status status;
+            //catch (SqlException e)
+            //{
+            //    _logger.LogError(e, $"An SQL error occured when calling {context.Method}");
+            //    Status status;
 
-                if (e.Number == -2)
-                {
-                    status = new Status(StatusCode.DeadlineExceeded, "SQL timeout");
-                }
-                else
-                {
-                    status = new Status(StatusCode.Internal, "SQL error");
-                }
-                throw new RpcException(status);
-            }
+            //    if (e.Number == -2)
+            //    {
+            //        status = new Status(StatusCode.DeadlineExceeded, "SQL timeout");
+            //    }
+            //    else
+            //    {
+            //        status = new Status(StatusCode.Internal, "SQL error");
+            //    }
+            //    throw new RpcException(status);
+            //}
             catch (Exception e)
             {
                 _logger.LogError(e, $"An error occured when calling {context.Method}");
