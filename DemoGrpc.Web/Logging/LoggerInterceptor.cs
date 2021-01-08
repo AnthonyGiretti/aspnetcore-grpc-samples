@@ -49,6 +49,33 @@ namespace DemoGrpc.Web.Logging
             
         }
 
+        public override Task<TResponse> ClientStreamingServerHandler<TRequest, TResponse>(
+            IAsyncStreamReader<TRequest> requestStream, 
+            ServerCallContext context, 
+            ClientStreamingServerMethod<TRequest, TResponse> continuation)
+        {
+            return continuation(requestStream, context);
+        }
+
+        
+        public override Task ServerStreamingServerHandler<TRequest, TResponse>(
+            TRequest request, 
+            IServerStreamWriter<TResponse> responseStream, 
+            ServerCallContext context, 
+            ServerStreamingServerMethod<TRequest, TResponse> continuation)
+        {
+            return continuation(request, responseStream, context);
+        }
+
+        public override Task DuplexStreamingServerHandler<TRequest, TResponse>(
+            IAsyncStreamReader<TRequest> requestStream, 
+            IServerStreamWriter<TResponse> responseStream, 
+            ServerCallContext context, 
+            DuplexStreamingServerMethod<TRequest, TResponse> continuation)
+        {
+            return continuation(requestStream, responseStream, context);
+        }
+
         private void LogCall(ServerCallContext context)
         {
             var httpContext = context.GetHttpContext();
