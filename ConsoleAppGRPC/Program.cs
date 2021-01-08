@@ -68,6 +68,13 @@ namespace ConsoleAppGRPC
                                     });
             };
 
+            var channel = new Channel("https://localhost:5001", ChannelCredentials.Insecure, new [] {
+                new ChannelOption("grpc.max_receive_message_length","5242880") // 5 MB
+            });
+            var countryClient = new CountryServiceClient(channel);
+            
+
+            var country = await countryClient.GetByIdAsync(new CountrySearchRequest { CountryId = 1 });
 
             // https://grpcwebdemo.azurewebsites.net
             // gRPC

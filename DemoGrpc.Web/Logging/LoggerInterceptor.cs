@@ -2,8 +2,8 @@
 using Grpc.Core.Interceptors;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
 namespace DemoGrpc.Web.Logging
 {
@@ -26,26 +26,21 @@ namespace DemoGrpc.Web.Logging
             {
                 return await continuation(request, context);
             }
-            catch (RpcException e)
+            catch (SqlException e)
             {
-                _logger.LogError(e, $"An error occured when calling {context.Method}");
-                throw e;
-            }
-            //catch (SqlException e)
-            //{
-            //    _logger.LogError(e, $"An SQL error occured when calling {context.Method}");
-            //    Status status;
+                _logger.LogError(e, $"An SQL error occured when calling {context.Method}");
+                Status status;
 
-            //    if (e.Number == -2)
-            //    {
-            //        status = new Status(StatusCode.DeadlineExceeded, "SQL timeout");
-            //    }
-            //    else
-            //    {
-            //        status = new Status(StatusCode.Internal, "SQL error");
-            //    }
-            //    throw new RpcException(status);
-            //}
+                if (e.Number == -2)
+                {
+                    status = new Status(StatusCode.DeadlineExceeded, "SQL timeout");
+                }
+                else
+                {
+                    status = new Status(StatusCode.Internal, "SQL error");
+                }
+                throw new RpcException(status);
+            }
             catch (Exception e)
             {
                 _logger.LogError(e, $"An error occured when calling {context.Method}");
