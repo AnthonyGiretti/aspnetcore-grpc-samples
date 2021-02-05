@@ -1,4 +1,4 @@
-# Samples of gRPC services in ASP.NET Core 3.1 (work in progress)
+# Samples of gRPC services in ASP.NET Core 5.0 (work in progress)
 
 ## Prerequistes 
 
@@ -27,9 +27,9 @@ Sample of token validation and get authenticated user from ServerCallContext
 
 Sample of KeyVault configuration and usage
 
-Sample of .NET Core 3.1 client CRUD consumption
+Sample of .NET Core 5.0 client CRUD consumption
 
-Sample of .NET Core 3.1 client using Polly resiliency
+Sample of .NET Core 5.0 client using Polly resiliency
 
 Sample of integration tests (work in progess)
 
