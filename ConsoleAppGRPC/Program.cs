@@ -68,6 +68,7 @@ namespace ConsoleAppGRPC
                                     });
             };
 
+            /*
             var channel = new Channel("https://localhost:5001", ChannelCredentials.Insecure, new [] {
                 new ChannelOption("grpc.max_receive_message_length","5242880") // 5 MB
             });
@@ -75,6 +76,7 @@ namespace ConsoleAppGRPC
             
 
             var country = await countryClient.GetByIdAsync(new CountrySearchRequest { CountryId = 1 });
+            */
 
             // https://grpcwebdemo.azurewebsites.net
             // gRPC
@@ -126,7 +128,7 @@ namespace ConsoleAppGRPC
                 //countriesweb.ForEach(x => Console.WriteLine($"Found country with gRPC-Web:  {x.CountryName} ({x.CountryId}) {x.Description}"));
 
                 // Create 
-                var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "test" });
+                var createdCountry = await client.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "" });
 
                 //var createdCountry2 = await clientWeb.CreateAsync(new CountryCreateRequest { Name = "Japan", Description = "" });
             }
