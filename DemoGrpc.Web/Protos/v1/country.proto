@@ -6,6 +6,7 @@ package v1;
 
 service CountryService {
   rpc GetAll(EmptyRequest) returns (CountriesReply) {}
+  rpc GetAllStreamed(EmptyRequest) returns (stream CountryReply) {}
   rpc GetById (CountrySearchRequest) returns (CountryReply) {}
   rpc Create (CountryCreateRequest) returns (CountryReply) {}
   rpc Update (CountryRequest) returns (CountryReply) {}

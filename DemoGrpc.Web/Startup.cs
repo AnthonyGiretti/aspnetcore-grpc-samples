@@ -8,7 +8,6 @@ using DemoGrpc.Web.Services;
 using DemoGrpc.Web.Validator;
 using DempGrpc.Services;
 using DempGrpc.Services.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,15 +15,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text.Json;
 using CountryGrpcServiceV1 = DemoGrpc.Web.Services.V1.CountryGrpcService;
-using System.Linq;
 using System.Net;
 
 namespace DemoAspNetCore3

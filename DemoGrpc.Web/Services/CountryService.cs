@@ -21,6 +21,18 @@ namespace DemoGrpc.Web.Services.V1
             _mapper = mapper;
         }
 
+        public override async Task GetAllStreamed(EmptyRequest request, IServerStreamWriter<CountryReply> responseStream, ServerCallContext context)
+        {
+            var headers = context.GetHttpContext().Request.Headers;
+            var lst = await _countryService.GetAsync();
+
+            foreach (var country in lst)
+            {
+                await responseStream.WriteAsync(_mapper.Map<CountryReply>(country));
+            }
+            await Task.CompletedTask;
+        }
+
         //[Authorize]
         public override async Task<CountriesReply> GetAll(EmptyRequest request, ServerCallContext context)
         {
